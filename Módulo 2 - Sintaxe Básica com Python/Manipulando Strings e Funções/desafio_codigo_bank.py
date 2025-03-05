@@ -41,7 +41,7 @@ extrato = ""
 numero_saque = 0
 LIMITE_SAQUE = 3
 
-# Funções
+# Funções: Formatar moeda
 def formatar_moeda(valor):
     locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
     return locale.currency(valor, symbol=True, grouping=True)
@@ -59,7 +59,7 @@ while True:
         else:
             print("\nValor não reconhecido :(\n")
 
-        extrato += "Saldo: R$ " + str(saldo) + "0\n" # Adcionando procedimento ao extrato
+        extrato += f"Saldo: {saldo}\n" # Adcionando procedimento ao extrato
 
     # OPERAÇÃO DE SAQUE
     elif opcao == 2:
@@ -69,15 +69,18 @@ while True:
         valor_saq = float(input("Informe o valor que deseja sacar: "))
         
         if numero_saque <= 2:
-            if valor_saq <= saldo:
-                saldo -= valor_saq # Diferença do saldo
-                print(f"\nValor sacado: {formatar_moeda(valor_saq)}\nValor disponível: {formatar_moeda(saldo)}\n")
+            if valor_saq <= 500:
+                if valor_saq <= saldo:
+                    saldo -= valor_saq # Diferença do saldo
+                    print(f"\nValor sacado: {formatar_moeda(valor_saq)}\nValor disponível: {formatar_moeda(saldo)}\n")
 
-                numero_saque += 1 # Adicionando número de saques utilizados
+                    numero_saque += 1 # Adicionando número de saques utilizados
 
-                extrato += "Saque: R$ " + str(valor_saq) + "0\n" # Adcionando procedimento ao extrato
+                    extrato += f"Saque: {valor_saq}\n" # Adcionando procedimento ao extrato
+                else:
+                    print(f"\nVocê não tem saldo disponível com o valor informado\n\nValor disponível: {formatar_moeda(saldo)}\n")
             else:
-                print(f"\nVocê não tem saldo disponível com o valor informado\n\nValor disponível: {formatar_moeda(saldo)}\n")
+                print("Limite de R$ 500,00 por saque;")
         else:
             print("\nLimite de saques excedidos :(\n")
     else:
