@@ -16,3 +16,33 @@
     Os valores devem ser exibidos utilizando o formato R$ xxx.xx, exemplo:
     1500.45 = R$ 1500,45
 '''
+
+import locale
+
+# Menu
+menu = '''
+Seja bem-vindo ao NiantBank
+
+Serviços:
+
+[1] Depositar
+
+[2] Saque
+
+[3] Extrato
+
+[4] Sair
+'''
+
+# Variáveis Globais
+saldo = 0
+limite = 500
+extrato = ""
+numero_saque = 0
+LIMITE_SAQUE = 3
+
+# Funções
+def formatar_moeda(valor):
+    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+    return locale.currency(valor, symbol=True, grouping=True)
+
