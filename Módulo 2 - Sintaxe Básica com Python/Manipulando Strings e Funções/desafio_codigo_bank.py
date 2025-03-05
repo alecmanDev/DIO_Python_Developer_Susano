@@ -86,5 +86,16 @@ while True:
                 print("Limite de R$ 500,00 por saque;")
         else:
             print("\nLimite de saques excedidos :(\n")
+
+    # OPERAÇÃO DE EXTRATO
+    elif opcao == 3:
+        print("OPÇÃO DE EXTRATO SELECIONADA: \n")
+        print(extrato)
+
+    # OPERAÇÃO DE SAÍDA DO SISTEMA
+    elif opcao == 4:
+        print("OBRIGADO POR UTILIZAR O SISTEMA NIANTBANK")
+        break
+    
     else:
         print("Opção inválida")
