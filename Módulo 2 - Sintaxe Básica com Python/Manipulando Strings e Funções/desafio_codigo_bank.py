@@ -90,7 +90,9 @@ while True:
     # OPERAÇÃO DE EXTRATO
     elif opcao == 3:
         print("OPÇÃO DE EXTRATO SELECIONADA: \n")
+        print("================ EXTRATO ===============\n")
         print(extrato)
+        print("=========================================")
 
     # OPERAÇÃO DE SAÍDA DO SISTEMA
     elif opcao == 4:
