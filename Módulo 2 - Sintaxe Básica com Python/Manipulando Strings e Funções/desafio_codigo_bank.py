@@ -35,6 +35,7 @@ Serviços:
 '''
 
 # Variáveis Globais
+deposito = 0
 saldo = 0
 limite = 500
 extrato = ""
@@ -53,13 +54,15 @@ while True:
     if opcao == 1:
         print("OPÇÃO DE DEPÓSITO SELECIONADA: \n")
 
-        saldo = float(input("Informe o valor que deseja depositar: "))
-        if saldo >= 0:
-            print(f"\nValor inserido com sucesso: {formatar_moeda(saldo)}\n")
+        deposito = float(input("Informe o valor que deseja depositar: "))
+        if deposito >= 0:
+            print(f"\nValor inserido com sucesso: {formatar_moeda(deposito)}\n")
+
         else:
             print("\nValor não reconhecido :(\n")
-
-        extrato += f"Saldo: {saldo}\n" # Adcionando procedimento ao extrato
+        
+        saldo = saldo + deposito
+        extrato += f"Aplicação: {formatar_moeda(deposito)}\nSaldo na conta: {formatar_moeda(saldo)}\n\n" # Adcionando procedimento ao extrato
 
     # OPERAÇÃO DE SAQUE
     elif opcao == 2:
@@ -70,13 +73,13 @@ while True:
         
         if numero_saque <= 2:
             if valor_saq <= 500:
-                if valor_saq <= saldo:
+                if valor_saq <= saldo and valor_saq != 0:
                     saldo -= valor_saq # Diferença do saldo
                     print(f"\nValor sacado: {formatar_moeda(valor_saq)}\nValor disponível: {formatar_moeda(saldo)}\n")
 
                     numero_saque += 1 # Adicionando número de saques utilizados
 
-                    extrato += f"Saque: {valor_saq}\n" # Adcionando procedimento ao extrato
+                    extrato += f"Saque: {formatar_moeda(valor_saq)}\nSaldo na conta: {formatar_moeda(saldo)}\n\n" # Adcionando procedimento ao extrato
                 else:
                     print(f"\nVocê não tem saldo disponível com o valor informado\n\nValor disponível: {formatar_moeda(saldo)}\n")
             else:
