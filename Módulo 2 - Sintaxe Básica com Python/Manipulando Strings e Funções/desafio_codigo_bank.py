@@ -46,3 +46,17 @@ def formatar_moeda(valor):
     locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
     return locale.currency(valor, symbol=True, grouping=True)
 
+while True:
+    opcao = int(input(menu))
+    
+    # OPERAÇÃO DE DEPÓSITO
+    if opcao == 1:
+        print("OPÇÃO DE DEPÓSITO SELECIONADA: \n")
+
+        saldo = float(input("Informe o valor que deseja depositar: "))
+        if saldo >= 0:
+            print(f"\nValor inserido com sucesso: {formatar_moeda(saldo)}\n")
+        else:
+            print("\nValor não reconhecido :(\n")
+
+        extrato += "Saldo: R$ " + str(saldo) + "0\n" # Adcionando procedimento ao extrato
