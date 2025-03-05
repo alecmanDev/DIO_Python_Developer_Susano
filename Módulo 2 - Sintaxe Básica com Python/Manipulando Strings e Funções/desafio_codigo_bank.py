@@ -60,3 +60,25 @@ while True:
             print("\nValor não reconhecido :(\n")
 
         extrato += "Saldo: R$ " + str(saldo) + "0\n" # Adcionando procedimento ao extrato
+
+    # OPERAÇÃO DE SAQUE
+    elif opcao == 2:
+        print("OPÇÃO DE SAQUE SELECIONADA: \n")
+
+        print(f"Limite de Saques: 3 \nVocê tem {LIMITE_SAQUE - numero_saque} saques disponíveis")
+        valor_saq = float(input("Informe o valor que deseja sacar: "))
+        
+        if numero_saque <= 2:
+            if valor_saq <= saldo:
+                saldo -= valor_saq # Diferença do saldo
+                print(f"\nValor sacado: {formatar_moeda(valor_saq)}\nValor disponível: {formatar_moeda(saldo)}\n")
+
+                numero_saque += 1 # Adicionando número de saques utilizados
+
+                extrato += "Saque: R$ " + str(valor_saq) + "0\n" # Adcionando procedimento ao extrato
+            else:
+                print(f"\nVocê não tem saldo disponível com o valor informado\n\nValor disponível: {formatar_moeda(saldo)}\n")
+        else:
+            print("\nLimite de saques excedidos :(\n")
+    else:
+        print("Opção inválida")
