@@ -87,7 +87,17 @@ def criar_usuario():
     usuarios.append({"nome": nome, "data_nascimento": data_nascimento, "cpf": cpf, "endereco": endereco}) # Adcionaando ao dicionário de usuários
     print("Usuário cadastrado com sucesso!")
 
+def criar_conta():
+    cpf = input("CPF do usuário: ").strip().replace(".", "").replace("-","") # Usuário informa o CPF
+    usuario = next((u for u in usuarios if u["cpf"] == cpf), None) # Verifica se o CPF informado se localiza no dicionário 'usuário'
+    if not usuario: # Caso não encontre, dá erro!
+        print("Usuário não encontrado!")
+        return
+    
+    conta = len(contas) + 1 # Conta é sequencial, seguindo sempre com mais 1
 
+    contas.append({"agencia": AGENCIA, "conta": conta, "usuario": usuario}) # Adciona as informações ao dicionário 'CONTAS'
+    print(f"Conta criada com sucesso!\nAGÊNCIA: {AGENCIA} | CONTA: {conta}")
 
 while True:
     opcao = int(input(menu))
