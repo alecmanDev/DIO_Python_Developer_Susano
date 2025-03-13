@@ -103,7 +103,7 @@ def depositar(saldo, valor, extrato, /):
     if valor > 0:
         saldo += valor
         extrato += f"Depósito: {formatar_moeda(valor)}\n"
-        print(f"Depósito realizado com sucesso: {formatar_moeda(valor)}")
+        print(f"\nDepósito realizado com sucesso: {formatar_moeda(valor)}\n")
 
     else:
         print("Valor informado inválido")
@@ -121,11 +121,17 @@ def sacar(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
         extrato += f"Saque: {formatar_moeda(valor)}"
         saldo -= valor
         numero_saques += 1
-        print(f"Saque realizado com sucesso: {formatar_moeda(valor)}")
+        print(f"\nSaque realizado com sucesso: {formatar_moeda(valor)}\n")
     else:
         print("Valor informado inválido")
 
     return saldo, extrato, numero_saques
+
+def exibir_extrato(saldo, /, *, extrato):
+    print("\n================ EXTRATO ===============\n")
+    print(extrato if extrato else "Não foram realizadas movimentações nesta conta!")
+    print(f"\n\nSaldo atual da conta: {formatar_moeda(saldo)}\n\n")
+    print("=========================================\n")
 
 while True:
     opcao = int(input(menu))
