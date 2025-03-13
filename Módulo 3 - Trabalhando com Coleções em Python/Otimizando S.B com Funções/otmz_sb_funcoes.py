@@ -99,6 +99,17 @@ def criar_conta():
     contas.append({"agencia": AGENCIA, "conta": conta, "usuario": usuario}) # Adciona as informações ao dicionário 'CONTAS'
     print(f"Conta criada com sucesso!\nAGÊNCIA: {AGENCIA} | CONTA: {conta}")
 
+def depositar(saldo, valor, extrato, /):
+    if valor > 0:
+        saldo += valor
+        extrato += f"Depósito: {formatar_moeda(valor)}\n"
+        print(f"Depósito realizado com sucesso: {formatar_moeda(valor)}")
+
+    else:
+        print("Valor informado inválido")
+
+    return saldo, extrato
+
 while True:
     opcao = int(input(menu))
     
