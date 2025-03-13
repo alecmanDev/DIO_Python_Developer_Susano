@@ -41,13 +41,17 @@ Seja bem-vindo ao NiantBank
 
 Serviços:
 
-[1] Depositar
+[1] Criar usuário
 
-[2] Saque
+[2] Criar conta corrente
 
-[3] Extrato
+[3] Depositar
 
-[4] Sair
+[4] Saque
+
+[5] Extrato
+
+[6] Sair
 '''
 
 # Contantes
@@ -66,7 +70,7 @@ def formatar_moeda(valor):
 # Funções: Criar uma conta
 def criar_usuario():
     nome = input("Insira seu nome completo: ")
-    data_nascimento = input("Insira sua data de nascimento (DD/MM/AAAA)")
+    data_nascimento = input("Insira sua data de nascimento (DD/MM/AAAA): ")
     cpf = input("CPF (Apenas números): ").strip().replace(".", "").replace("-", "")
     logradouro = input("Logradouro: ")
     numero = input("Número: ")
@@ -85,7 +89,7 @@ def criar_usuario():
         return # Retornando para o menu
     
     usuarios.append({"nome": nome, "data_nascimento": data_nascimento, "cpf": cpf, "endereco": endereco}) # Adcionaando ao dicionário de usuários
-    print("Usuário cadastrado com sucesso!")
+    print("\nUsuário cadastrado com sucesso!\n")
 
 def criar_conta():
     cpf = input("CPF do usuário: ").strip().replace(".", "").replace("-","") # Usuário informa o CPF
@@ -97,7 +101,7 @@ def criar_conta():
     conta = len(contas) + 1 # Conta é sequencial, seguindo sempre com mais 1
 
     contas.append({"agencia": AGENCIA, "conta": conta, "usuario": usuario}) # Adciona as informações ao dicionário 'CONTAS'
-    print(f"Conta criada com sucesso!\nAGÊNCIA: {AGENCIA} | CONTA: {conta}")
+    print(f"\nConta criada com sucesso!\nAGÊNCIA: {AGENCIA} | CONTA: {conta}\n")
 
 def depositar(saldo, valor, extrato, /):
     if valor > 0:
@@ -133,55 +137,43 @@ def exibir_extrato(saldo, /, *, extrato):
     print(f"\n\nSaldo atual da conta: {formatar_moeda(saldo)}\n\n")
     print("=========================================\n")
 
+# Programa principal
+saldo = 0
+extrato = ""
+numero_saques = 0
+
 while True:
     opcao = int(input(menu))
     
-    # OPERAÇÃO DE DEPÓSITO
+    # OPERAÇÃO DE CRIAÇÃO DE USUÁRIO
     if opcao == 1:
-        print("OPÇÃO DE DEPÓSITO SELECIONADA: \n")
+        print("OPÇÃO DE CRIAÇÃO DE USUÁRIO SELECIONADA: \n")
+        criar_usuario()
 
-        deposito = float(input("Informe o valor que deseja depositar: "))
-        if deposito >= 0:
-            print(f"\nValor inserido com sucesso: {formatar_moeda(deposito)}\n")
-
-        else:
-            print("\nValor não reconhecido :(\n")
-        
-        saldo = saldo + deposito
-        extrato += f"Aplicação: {formatar_moeda(deposito)}\nSaldo na conta: {formatar_moeda(saldo)}\n\n" # Adcionando procedimento ao extrato
-
-    # OPERAÇÃO DE SAQUE
+    # OPERAÇÃO DE CRIAÇÃO DE CONTA CORRENTE
     elif opcao == 2:
-        print("OPÇÃO DE SAQUE SELECIONADA: \n")
+        print("OPÇÃO DE CRIAÇÃO DE CONTA COORENTE SELECIONADA: \n")
+        criar_conta()
 
-        print(f"Limite de Saques: 3 \nVocê tem {LIMITE_SAQUE - numero_saque} saques disponíveis")
-        valor_saq = float(input("Informe o valor que deseja sacar: "))
-        
-        if numero_saque <= 2:
-            if valor_saq <= 500:
-                if valor_saq <= saldo and valor_saq != 0:
-                    saldo -= valor_saq # Diferença do saldo
-                    print(f"\nValor sacado: {formatar_moeda(valor_saq)}\nValor disponível: {formatar_moeda(saldo)}\n")
-
-                    numero_saque += 1 # Adicionando número de saques utilizados
-
-                    extrato += f"Saque: {formatar_moeda(valor_saq)}\nSaldo na conta: {formatar_moeda(saldo)}\n\n" # Adcionando procedimento ao extrato
-                else:
-                    print(f"\nVocê não tem saldo disponível com o valor informado\n\nValor disponível: {formatar_moeda(saldo)}\n")
-            else:
-                print("Limite de R$ 500,00 por saque;")
-        else:
-            print("\nLimite de saques excedidos :(\n")
-
-    # OPERAÇÃO DE EXTRATO
+    # OPERAÇÃO DE DEPOSITAR
     elif opcao == 3:
+        print("OPÇÃO DE DEPÓSITO SELECIONADA: \n")
+        valor = float(input("Informe o valor que deseja depositar: "))
+        saldo, extrato = depositar(saldo, valor, extrato)
+
+    # OPERAÇÃO DE SACAR
+    elif opcao == 4:
+        print("OPÇÃO DE SAQUE SELECIONADA: \n")
+        valor = float(input("Informe o valor que deseja sacar: "))
+        saldo, extrato, numero_saques = sacar(saldo=saldo, valor=valor, extrato=extrato, limite=500, numero_saques=numero_saques, limite_saques=LIMITE_SAQUE)
+
+    # OPERAÇÃO DE EXIBIR EXTRATO
+    elif opcao == 5:
         print("OPÇÃO DE EXTRATO SELECIONADA: \n")
-        print("================ EXTRATO ===============\n")
-        print(extrato)
-        print("=========================================")
+        exibir_extrato(saldo, extrato="")
 
     # OPERAÇÃO DE SAÍDA DO SISTEMA
-    elif opcao == 4:
+    elif opcao == 6:
         print("OBRIGADO POR UTILIZAR O SISTEMA NIANTBANK")
         break
     
