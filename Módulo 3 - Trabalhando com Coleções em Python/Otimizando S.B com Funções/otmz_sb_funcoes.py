@@ -110,6 +110,23 @@ def depositar(saldo, valor, extrato, /):
 
     return saldo, extrato
 
+def sacar(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
+    if numero_saques > limite_saques:
+        print("Limite de saques atingidos hoje!")
+    elif valor > saldo:
+        print(f"Valor informado excede o saldo atual de {formatar_moeda(saldo)}")
+    elif valor > limite:
+        print(f"Valor informado excede o limite de {formatar_moeda(limite)}")
+    elif valor > 0:
+        extrato += f"Saque: {formatar_moeda(valor)}"
+        saldo -= valor
+        numero_saques += 1
+        print(f"Saque realizado com sucesso: {formatar_moeda(valor)}")
+    else:
+        print("Valor informado inválido")
+
+    return saldo, extrato, numero_saques
+
 while True:
     opcao = int(input(menu))
     
