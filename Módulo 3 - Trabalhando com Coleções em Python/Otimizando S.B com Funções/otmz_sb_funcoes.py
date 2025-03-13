@@ -1,4 +1,4 @@
-'''  OTIMZAÇÃO DO SISTEMA BANCÁRIO COM FUNÇÕES  '''
+'''  OTIMIZAÇÃO DO SISTEMA BANCÁRIO COM FUNÇÕES  '''
 '''
 Precisamos deixar nosso código mais modularizado para isso vamos criar funções para as operações existentes: sacar, depositar e visualizar histórico. Além disso, para a versão 2 do nosso sistema precisamos criar duas novas funções: criar usuário (cliente do banco) e criar conta corrente (vincular com usuário)
 '''
@@ -56,7 +56,7 @@ Serviços:
 
 # Contantes
 AGENCIA = "0001"
-LIMITE_SAQUE = 3
+LIMITE_SAQUE = 2
 
 # Variáveis Globais
 usuarios = []
@@ -106,7 +106,7 @@ def criar_conta():
 def depositar(saldo, valor, extrato, /):
     if valor > 0:
         saldo += valor
-        extrato += f"Depósito: {formatar_moeda(valor)}\n"
+        extrato += f"Depósito: {formatar_moeda(valor)} | Saldo atual: {formatar_moeda(saldo)}\n"
         print(f"\nDepósito realizado com sucesso: {formatar_moeda(valor)}\n")
 
     else:
@@ -122,8 +122,8 @@ def sacar(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
     elif valor > limite:
         print(f"Valor informado excede o limite de {formatar_moeda(limite)}")
     elif valor > 0:
-        extrato += f"Saque: {formatar_moeda(valor)}"
         saldo -= valor
+        extrato += f"Saque: {formatar_moeda(valor)} | Saldo atual: {formatar_moeda(saldo)}\n"
         numero_saques += 1
         print(f"\nSaque realizado com sucesso: {formatar_moeda(valor)}\n")
     else:
@@ -170,7 +170,7 @@ while True:
     # OPERAÇÃO DE EXIBIR EXTRATO
     elif opcao == 5:
         print("OPÇÃO DE EXTRATO SELECIONADA: \n")
-        exibir_extrato(saldo, extrato="")
+        exibir_extrato(saldo, extrato=extrato)
 
     # OPERAÇÃO DE SAÍDA DO SISTEMA
     elif opcao == 6:
