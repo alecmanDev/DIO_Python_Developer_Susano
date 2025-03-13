@@ -51,7 +51,9 @@ Serviços:
 
 [5] Extrato
 
-[6] Sair
+[6] Exibir Contas
+
+[7] Sair
 '''
 
 # Contantes
@@ -106,7 +108,7 @@ def criar_conta():
 def depositar(saldo, valor, extrato, /):
     if valor > 0:
         saldo += valor
-        extrato += f"Depósito: {formatar_moeda(valor)} | Saldo atual: {formatar_moeda(saldo)}\n"
+        extrato += f"Depósito:\t{formatar_moeda(valor)}\t|\tSaldo atual:\t{formatar_moeda(saldo)}\n"
         print(f"\nDepósito realizado com sucesso: {formatar_moeda(valor)}\n")
 
     else:
@@ -123,7 +125,7 @@ def sacar(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
         print(f"Valor informado excede o limite de {formatar_moeda(limite)}")
     elif valor > 0:
         saldo -= valor
-        extrato += f"Saque: {formatar_moeda(valor)} | Saldo atual: {formatar_moeda(saldo)}\n"
+        extrato += f"Saque:\t\t{formatar_moeda(valor)}\t|\tSaldo atual:\t{formatar_moeda(saldo)}\n"
         numero_saques += 1
         print(f"\nSaque realizado com sucesso: {formatar_moeda(valor)}\n")
     else:
@@ -136,6 +138,17 @@ def exibir_extrato(saldo, /, *, extrato):
     print(extrato if extrato else "Não foram realizadas movimentações nesta conta!")
     print(f"\n\nSaldo atual da conta: {formatar_moeda(saldo)}\n\n")
     print("=========================================\n")
+
+def exibir_contas():
+    if not contas:
+        print("Nenhuma conta cadastrada!")
+        return
+    
+    for conta in contas:
+        print(f"Agência:\t{conta['agencia']}")
+        print(f"C/C:\t{conta['conta']}")
+        print(f"Titular:\t{conta['usuario']['nome']}")
+        print("=" * 40  )
 
 # Programa principal
 saldo = 0
@@ -172,8 +185,13 @@ while True:
         print("OPÇÃO DE EXTRATO SELECIONADA: \n")
         exibir_extrato(saldo, extrato=extrato)
 
-    # OPERAÇÃO DE SAÍDA DO SISTEMA
+    # OPERAÇÃO DE EXIBIR CONTAS
     elif opcao == 6:
+        print("OPÇÃO DE EXIBIR CONTA SELECIONADA: \n")
+        exibir_contas()
+
+    # OPERAÇÃO DE SAÍDA DO SISTEMA
+    elif opcao == 7:
         print("OBRIGADO POR UTILIZAR O SISTEMA NIANTBANK")
         break
     
