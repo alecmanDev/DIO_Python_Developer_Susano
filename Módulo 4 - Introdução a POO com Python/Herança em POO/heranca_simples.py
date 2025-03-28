@@ -7,8 +7,9 @@ class Veiculo:
     def ligar_motor(self):
         print("Ligando o motor")
 
-    def __str__(self):
-        return self.cor
+    def __str__(self): # imprimi a classe pro usuário
+        return f"{self.__class__.__name__}: {', '.join([f'{chave} = {valor}' for chave, valor in self.__dict__.items()])}"
+
 
 class Motocicleta(Veiculo):
     pass
